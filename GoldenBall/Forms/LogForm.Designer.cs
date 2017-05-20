@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.txtLog = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // txtLog
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 25);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(452, 477);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            this.txtLog.Location = new System.Drawing.Point(12, 25);
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(452, 477);
+            this.txtLog.TabIndex = 0;
+            this.txtLog.Text = "";
             // 
             // label1
             // 
@@ -79,7 +79,7 @@
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.txtLog);
             this.Name = "LogForm";
             this.Text = "LogForm";
             this.ResumeLayout(false);
@@ -89,7 +89,7 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnTest;

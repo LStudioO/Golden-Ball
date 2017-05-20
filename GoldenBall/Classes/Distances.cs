@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace GoldenBall.Classes
 {
-    public sealed class Distances
+    public sealed class Manager
     {
-        private static readonly Distances instance = new Distances();
+        private static readonly Manager instance = new Manager();
 
         private double[,] dist;
+
+        private int citiesCount;
 
         public void Load(string path = "test_example.txt")
         {
@@ -19,9 +21,11 @@ namespace GoldenBall.Classes
 
             var file = File.ReadAllLines(path);
 
-            dist = new double[file.Length, file.Length];
+            citiesCount = file.Length;
 
-            for (int i = 0; i < file.Length; i++)
+            dist = new double[citiesCount, citiesCount];
+
+            for (int i = 0; i < citiesCount; i++)
             {
                 dist[i, i] = -1D;
 
@@ -54,19 +58,32 @@ namespace GoldenBall.Classes
             return dist[first - 1, second - 1];
         }
 
-        static Distances()
+        static Manager()
         {
         }
 
-        private Distances()
+        private Manager()
         {
         }
 
-        public static Distances Instance
+        public static Manager Instance
         {
             get
             {
                 return instance;
+            }
+        }
+
+        public int CitiesCount
+        {
+            get
+            {
+                return citiesCount;
+            }
+
+            set
+            {
+                citiesCount = value;
             }
         }
     }

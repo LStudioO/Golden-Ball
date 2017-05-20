@@ -19,18 +19,18 @@ namespace GoldenBall.Classes
 
         public Player(int capacity, int first)
         {
-            route = new List<int>(capacity);
+            Route = new List<int>(capacity);
 
-            route.Add(first);
+            Route.Add(first);
 
-            var rand_collection = Enumerable.Range(1, capacity);
+            System.Random rnd = new System.Random();
 
-            rand_collection.Shuffle(rand_collection.Count());
+            var numbers = Enumerable.Range(1, capacity).OrderBy(r => rnd.Next()).ToArray();
 
-            foreach (var itm in route)
+            foreach (var itm in numbers)
             {
                 if (itm != first)
-                    route.Add(itm);
+                    Route.Add(itm);
             }
         }
 
@@ -74,6 +74,19 @@ namespace GoldenBall.Classes
             }
         }
 
+        public List<int> Route
+        {
+            get
+            {
+                return route;
+            }
+
+            set
+            {
+                route = value;
+            }
+        }
+
         public void NotSuccess()
         {
             unsuccessfulCount++;
@@ -89,14 +102,21 @@ namespace GoldenBall.Classes
             if (index1 == 0 || index2 == 0)
                 return;
 
-            var tmp = route[index1];
-            route[index1] = route[index2];
-            route[index2] = tmp;
+            var tmp = Route[index1];
+            Route[index1] = Route[index2];
+            Route[index2] = tmp;
         }
 
         public void DetermineMark()
         {
             mark = 0;
+
+            for (int i = 0; i < Route.Count - 1; i++)
+            {
+                mark += Manager.Instance.getDistanceBetween(Route[i], Route[i + 1]);
+            }
+
+            mark += Manager.Instance.getDistanceBetween(Route.Last(), Route.First());
         }
 
 

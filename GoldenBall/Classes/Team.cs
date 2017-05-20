@@ -9,6 +9,11 @@ namespace GoldenBall.Classes
     class Team
     {
 
+
+        private int id;
+        private static int counter = 1;
+        
+
         Train trainingMethod;
 
         List<Player> playersList;
@@ -23,9 +28,32 @@ namespace GoldenBall.Classes
             }
         }
 
-        public Team()
+        public List<Player> Players
         {
-            playersList = new List<Player>();
+            get
+            {
+                return playersList;
+            }
+
+            set
+            {
+                playersList = value;
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        public Team(List<Player> p)
+        {
+            id = counter++;
+
+            playersList = p;
 
             var n = new Random().Next(2);
 
