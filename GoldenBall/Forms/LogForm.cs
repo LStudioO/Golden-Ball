@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GoldenBall.Classes;
 
 namespace GoldenBall.Forms
 {
@@ -20,6 +21,11 @@ namespace GoldenBall.Forms
         private void btnStart_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            Distances.Instance.Load();
         }
     }
 }
