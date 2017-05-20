@@ -7,26 +7,30 @@ namespace GoldenBall.Classes
 
         public static void Random(Player p)
         {
-            var rand = new Random();
-            var n1 = rand.Next(1, p.Capacity);
-            var n2 = rand.Next(1, p.Capacity);
-    
-            while (n2 == n1)
-                n2 = rand.Next(1, p.Capacity);
-
-            var prevMark = p.Mark;
-
-            p.SwapRoute(n1, n2);
-            p.DetermineMark();
-
-            if (p.Mark < prevMark)
+            for (int i = 0; i < 4; i++)
             {
-                p.Success();
-            }
-            else
-            {
-                p.NotSuccess();
+                var rand = new Random();
+                var n1 = rand.Next(1, p.Capacity);
+                var n2 = rand.Next(1, p.Capacity);
+
+                while (n2 == n1)
+                    n2 = rand.Next(1, p.Capacity);
+
+                var prevMark = p.Mark;
+
                 p.SwapRoute(n1, n2);
+                p.DetermineMark();
+
+                if (p.Mark < prevMark)
+                {
+                    p.Success();
+                    return;
+                }
+                else
+                {
+                    p.NotSuccess();
+                    p.SwapRoute(n1, n2);
+                }
             }
         }
 

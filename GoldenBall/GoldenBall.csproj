@@ -49,8 +49,8 @@
     <Compile Include="Classes\Distances.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Season.cs" />
     <Compile Include="Classes\Team.cs" />
-    <Compile Include="Classes\Tour.cs" />
     <Compile Include="Classes\Tournament.cs" />
     <Compile Include="Classes\TrainingMethods.cs" />
     <Compile Include="Forms\GenerationParams.cs">

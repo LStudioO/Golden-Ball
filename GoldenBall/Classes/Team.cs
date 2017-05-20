@@ -49,6 +49,15 @@ namespace GoldenBall.Classes
             }
         }
 
+        public Player Captain
+        {
+            get
+            {
+                double min = playersList.Min(i => i.Mark);
+                return playersList.First(x => x.Mark == min);
+            }
+        }
+
         public Team(List<Player> p)
         {
             id = counter++;
@@ -67,12 +76,6 @@ namespace GoldenBall.Classes
         {
             double sum = playersList.Sum(p => p.Mark);
             mark = sum / playersList.Count;
-        }
-
-        public Player getCaptain()
-        {
-            double min = playersList.Min(i => i.Mark);
-            return playersList.First(x => x.Mark == min);
         }
 
         public static void Transfer(Player p1, Player p2)
