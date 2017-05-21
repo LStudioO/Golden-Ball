@@ -36,6 +36,14 @@ namespace GoldenBall.Classes
 
         private double mark;
 
+        public bool NeedPersonalTraining
+        {
+            get
+            {
+                return (unsuccessfulCount > 3);
+            }
+        }
+
         public double Mark
         {
             set
@@ -113,16 +121,10 @@ namespace GoldenBall.Classes
 
             for (int i = 0; i < Route.Count - 1; i++)
             {
-                mark += Manager.Instance.getDistanceBetween(Route[i], Route[i + 1]);
+                mark += Manager.Instance.GetDistanceBetween(Route[i], Route[i + 1]);
             }
 
-            mark += Manager.Instance.getDistanceBetween(Route.Last(), Route.First());
-        }
-
-
-        public void Practise(Random rand)
-        {
-
+            mark += Manager.Instance.GetDistanceBetween(Route.Last(), Route.First());
         }
     }
 }

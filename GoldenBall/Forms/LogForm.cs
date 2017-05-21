@@ -23,7 +23,9 @@ namespace GoldenBall.Forms
         {
             try
             {
-                Manager.Instance.Load();
+                var manager = Manager.Instance;
+
+                manager.Load();
 
                 List<Player> pList = new List<Player>();
 
@@ -59,6 +61,8 @@ namespace GoldenBall.Forms
 
                     tList.Add(t);
                 }
+
+                manager.AllPlayers = pList;
 
                 tList.ForEach(t =>
                 {

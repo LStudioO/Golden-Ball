@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace GoldenBall.Classes
     public sealed class Manager
     {
         private static readonly Manager instance = new Manager();
+
+        private List<Player> allPlayers;
 
         private double[,] dist;
 
@@ -39,14 +42,19 @@ namespace GoldenBall.Classes
             }
         }
 
-        public bool isLoad()
+        public bool IsLoad()
         {
             return (dist != null);
         }
 
-        public double getDistanceBetween(int first, int second)
+        public bool PlayerExists(Player p)
         {
-            if (!isLoad())
+            return allPlayers.Any(obj => obj.Route.SequenceEqual(p.Route));
+        }
+
+        public double GetDistanceBetween(int first, int second)
+        {
+            if (!IsLoad())
                 throw new Exception("You should load distances first");
 
             if (first == second)
@@ -84,6 +92,19 @@ namespace GoldenBall.Classes
             set
             {
                 citiesCount = value;
+            }
+        }
+
+        public List<Player> AllPlayers
+        {
+            get
+            {
+                return allPlayers;
+            }
+
+            set
+            {
+                allPlayers = value;
             }
         }
     }

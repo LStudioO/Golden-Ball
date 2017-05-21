@@ -21,7 +21,7 @@ namespace GoldenBall.Classes
                 p.SwapRoute(n1, n2);
                 p.DetermineMark();
 
-                if (p.Mark < prevMark)
+                if (p.Mark < prevMark && !Manager.Instance.PlayerExists(p))
                 {
                     p.Success();
                     return;
@@ -35,6 +35,11 @@ namespace GoldenBall.Classes
         }
 
         public static void Chain(Player p)
+        {
+
+        }
+
+        public static void Personal(Player captain, Player player)
         {
 
         }

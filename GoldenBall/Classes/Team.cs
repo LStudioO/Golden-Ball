@@ -8,8 +8,6 @@ namespace GoldenBall.Classes
 
     class Team
     {
-
-
         private int id;
         private static int counter = 1;
         
@@ -72,7 +70,7 @@ namespace GoldenBall.Classes
                 trainingMethod = TrainingMethods.Chain;
         }
 
-        public void determineMark()
+        public void DetermineMark()
         {
             double sum = playersList.Sum(p => p.Mark);
             mark = sum / playersList.Count;
@@ -87,8 +85,19 @@ namespace GoldenBall.Classes
 
         public void Train()
         {
-            foreach (var itm in playersList)
-                trainingMethod(itm);
+            playersList.ForEach(p => trainingMethod(p));
         }
+
+        public void PersonalTrain()
+        {
+            playersList.ForEach(p =>
+            {
+                if (p.NeedPersonalTraining)
+                {
+                    TrainingMethods.Personal(Captain, p);
+                }
+            });
+        }
+
     }
 }
