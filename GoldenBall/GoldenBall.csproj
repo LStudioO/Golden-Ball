@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Distances.cs" />
+    <Compile Include="Classes\Manager.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Season.cs" />
