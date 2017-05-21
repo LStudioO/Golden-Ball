@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GoldenBall.Classes;
 
@@ -25,53 +21,61 @@ namespace GoldenBall.Forms
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            Manager.Instance.Load();
-
-            List<Player> pList = new List<Player>();
-
-            List<Team> tList = new List<Team>();
- 
-            var capacity = Manager.Instance.CitiesCount;
-
-            var teamCount = 4;
-
-            var playerInTeamCount = 3;
-
-            for (int i = 0; i < teamCount * playerInTeamCount; i++)
+            try
             {
-                var success = false;
-                Player p;
+                Manager.Instance.Load();
 
-                do
+                List<Player> pList = new List<Player>();
+
+                List<Team> tList = new List<Team>();
+
+                var capacity = Manager.Instance.CitiesCount;
+
+                var teamCount = 4;
+
+                var playerInTeamCount = 3;
+
+                for (int i = 0; i < teamCount * playerInTeamCount; i++)
                 {
-                    p = new Player(capacity, 1);
+                    var success = false;
+                    Player p;
 
-                    success = !pList.Any(obj => obj.Route.SequenceEqual(p.Route));
+                    do
+                    {
+                        p = new Player(capacity, 1);
 
-                } while (!success);
+                        success = !pList.Any(obj => obj.Route.SequenceEqual(p.Route));
 
-                pList.Add(p);
-            }
+                    } while (!success);
 
-            for (int i = 0; i < teamCount; i++)
-            {
-                var players = pList.GetRange(i * playerInTeamCount, playerInTeamCount);
+                    pList.Add(p);
+                }
 
-                Team t = new Team(players);
+                for (int i = 0; i < teamCount; i++)
+                {
+                    var players = pList.GetRange(i * playerInTeamCount, playerInTeamCount);
 
-                tList.Add(t);
-            }
+                    Team t = new Team(players);
 
-            tList.ForEach(t => {
+                    tList.Add(t);
+                }
 
-                txtLog.Text += "Team #" + t.Id + Environment.NewLine;
+                tList.ForEach(t =>
+                {
 
-                t.Players.ForEach(p => {
-                    p.Route.ForEach(i => { txtLog.Text += i + " "; });
-                    txtLog.Text += Environment.NewLine;
+                    txtLog.Text += "Team #" + t.Id + Environment.NewLine;
+
+                    t.Players.ForEach(p =>
+                    {
+                        p.Route.ForEach(i => { txtLog.Text += i + " "; });
+                        txtLog.Text += Environment.NewLine;
+                    });
+
                 });
-
-            });
+            } catch (Exception ex)
+            {
+                txtLog.Text += ex.ToString();
+            }
         }
     }
 }
