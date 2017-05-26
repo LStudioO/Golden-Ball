@@ -56,6 +56,19 @@ namespace GoldenBall.Classes
             }
         }
 
+        public Train TrainingMethod
+        {
+            get
+            {
+                return trainingMethod;
+            }
+
+            set
+            {
+                trainingMethod = value;
+            }
+        }
+
         public Team(List<Player> p)
         {
             id = counter++;

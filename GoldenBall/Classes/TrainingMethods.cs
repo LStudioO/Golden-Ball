@@ -7,6 +7,25 @@ namespace GoldenBall.Classes
     class TrainingMethods
     {
 
+        public static Train GetRandomTrainingMethod()
+        {
+            var n = new Random().Next(2);
+
+            switch (n)
+            {
+                case 0:
+                    {
+                        return Random;
+                    }
+                case 1:
+                    {
+                        return Chain;
+                    }
+                default:
+                    return Random;
+            }
+        }
+
         public static void Random(Player p)
         {
             for (int i = 0; i < 4; i++)

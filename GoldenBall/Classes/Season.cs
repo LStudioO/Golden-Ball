@@ -165,6 +165,24 @@ namespace GoldenBall.Classes
             }
         }
 
+        private void findCoach()
+        {
+            var sorted = rating.OrderBy(a => a.Value).Select(a => a.Key).ToList();
+
+            for (int i = 0; i < sorted.Count / 2; i++)
+            {
+                Train oldCoach = sorted[i].TrainingMethod;
+                Train newCoach;
+
+                do
+                {
+                    newCoach = TrainingMethods.GetRandomTrainingMethod();
+                } while (Delegate.Equals(oldCoach, newCoach));
+
+                oldCoach = newCoach;
+            }
+        }
+
         public void Start()
         {
             // generate table
@@ -196,6 +214,7 @@ namespace GoldenBall.Classes
                 }
 
                 transfer();
+                findCoach();
             }
 
         }
