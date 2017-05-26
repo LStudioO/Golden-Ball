@@ -52,6 +52,11 @@ namespace GoldenBall.Classes
             return allPlayers.Any(obj => obj.Route.SequenceEqual(p.Route));
         }
 
+        public bool PlayerExists(List<int> route)
+        {
+            return allPlayers.Any(obj => obj.Route.SequenceEqual(route));
+        }
+
         public double GetDistanceBetween(int first, int second)
         {
             if (!IsLoad())

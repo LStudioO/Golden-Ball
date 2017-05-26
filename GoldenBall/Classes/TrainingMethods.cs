@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GoldenBall.Classes
 {
@@ -41,7 +43,53 @@ namespace GoldenBall.Classes
 
         public static void Personal(Player captain, Player player)
         {
+            double mark = player.Mark;
 
+            int halfSize = (captain.Route.Count - 1) / 2 + 1;
+
+            var halfRoute = captain.Route.GetRange(1, halfSize);
+
+            for (int i = 1; i < captain.Route.Count - halfSize; i++)
+            {
+                var newRoute = new List<int>();
+
+                newRoute.Add(player.Route[0]);
+
+                var aPath = Enumerable.Range(1, player.Capacity).Except(newRoute).Except(halfRoute).ToList();
+
+                // pre
+                for (int k = 1; k < i; k++)
+                {
+                    var itm = aPath.First();
+                    aPath.RemoveAt(0);
+                    newRoute.Add(itm);
+                }
+
+                newRoute.AddRange(halfRoute);
+
+                // after
+                for (int l = i + halfSize; l < captain.Route.Count; l++)
+                {
+                    var itm = aPath.First();
+                    aPath.RemoveAt(0);
+                    newRoute.Add(itm);
+                }
+
+                if (!Manager.Instance.PlayerExists(newRoute))
+                {
+                    var oldRoute = player.Route;
+                    player.Route = newRoute;
+                    if (player.Mark >= mark)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        player.Route = oldRoute;
+                    }
+                }
+
+            }
         }
 
     }

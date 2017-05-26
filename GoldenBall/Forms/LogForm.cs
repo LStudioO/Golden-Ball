@@ -80,7 +80,7 @@ namespace GoldenBall.Forms
                 var season = new Season(tList);
 
                 season.Start();
-                
+
             } catch (Exception ex)
             {
                 txtLog.Text += ex.ToString();

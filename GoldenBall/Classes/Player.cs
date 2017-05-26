@@ -19,6 +19,8 @@ namespace GoldenBall.Classes
 
         public Player(int capacity, int first)
         {
+            Capacity = capacity;
+
             Route = new List<int>(capacity);
 
             Route.Add(first);
@@ -32,6 +34,13 @@ namespace GoldenBall.Classes
                 if (itm != first)
                     Route.Add(itm);
             }
+
+            DetermineMark();
+        }
+
+        public Player(List<int> route)
+        {
+            Route = route;
         }
 
         private double mark;
@@ -92,6 +101,7 @@ namespace GoldenBall.Classes
             set
             {
                 route = value;
+                DetermineMark();
             }
         }
 
@@ -118,6 +128,9 @@ namespace GoldenBall.Classes
         public void DetermineMark()
         {
             mark = 0;
+
+            if (route.Count < 2)
+                return;
 
             for (int i = 0; i < Route.Count - 1; i++)
             {
