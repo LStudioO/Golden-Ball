@@ -124,8 +124,45 @@ namespace GoldenBall.Classes
                 rating[t1] += 1;
                 rating[t2] += 1;
             }
+        }        
 
+        private void transfer()
+        {
+            var sorted = rating.OrderByDescending(a => a.Value).Select(a => a.Key).ToList();
 
+            for (int i = 0; i < sorted.Count / 2; i++)
+            {
+                var currentTop = sorted[i];
+                var currentDown = sorted[sorted.Count - 1 - i];
+
+                var topTeamPlayer = currentTop.Players.OrderBy(p => p.Mark).ToArray()[i];
+                var downTeamPlayer = currentTop.Players.OrderByDescending(p => p.Mark).ToArray()[i];
+
+                var tempPlayer = topTeamPlayer;
+                topTeamPlayer = downTeamPlayer;
+                downTeamPlayer = tempPlayer;
+            }
+        }
+
+        private void individualTransfer()
+        {
+
+            foreach (var itm in tList)
+            {
+                itm.Players.ForEach(p =>
+                {
+                    if (p.NeedIndividualTransfer)
+                    {
+                        var teams = tList.Where(a => a != itm).ToList();
+                        var rTeamIndex = new Random().Next(0, teams.Count);
+                        var rPlayerIndex = new Random().Next(0, itm.Players.Count);
+                        var tmpPlayer = p;
+                        p.Success();
+                        p = teams[rTeamIndex].Players[rPlayerIndex];
+                        teams[rTeamIndex].Players[rPlayerIndex] = tmpPlayer;
+                    }
+                });
+            }
         }
 
         public void Start()
@@ -147,6 +184,8 @@ namespace GoldenBall.Classes
                         itm.DetermineMark();
                     }
 
+                    individualTransfer();
+
                     for (int k = 0; k < tCount + 1; k += 2)
                     {
                         var teamFirstId = table[i, k];
@@ -156,6 +195,7 @@ namespace GoldenBall.Classes
                     }
                 }
 
+                transfer();
             }
 
         }

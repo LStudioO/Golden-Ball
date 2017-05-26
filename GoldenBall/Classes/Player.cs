@@ -53,6 +53,14 @@ namespace GoldenBall.Classes
             }
         }
 
+        public bool NeedIndividualTransfer
+        {
+            get
+            {
+                return (unsuccessfulCount > 10);
+            }
+        }
+
         public double Mark
         {
             set

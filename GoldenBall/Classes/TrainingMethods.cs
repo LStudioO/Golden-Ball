@@ -81,10 +81,12 @@ namespace GoldenBall.Classes
                     player.Route = newRoute;
                     if (player.Mark >= mark)
                     {
+                        player.Success();
                         return;
                     }
                     else
                     {
+                        player.NotSuccess();
                         player.Route = oldRoute;
                     }
                 }

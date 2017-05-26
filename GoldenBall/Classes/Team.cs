@@ -99,5 +99,17 @@ namespace GoldenBall.Classes
             });
         }
 
+        public void IndividualTransfer()
+        {
+            playersList.ForEach(p =>
+            {
+                if (p.NeedIndividualTransfer)
+                {
+                   // TODO
+                }
+            });
+        }
+
+
     }
 }
