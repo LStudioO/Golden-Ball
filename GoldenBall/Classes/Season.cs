@@ -120,11 +120,11 @@ namespace GoldenBall.Classes
 
             for (int i = 0; i < t1.Players.Count; i++)
             {
-                if (playersTeamOne[i].Mark > playersTeamTwo[i].Mark)
+                if (playersTeamOne[i].Mark < playersTeamTwo[i].Mark)
                 {
                     firstTeamMark++;
                 }
-                else
+                else if (playersTeamTwo[i].Mark < playersTeamOne[i].Mark)
                 {
                     secondTeamMark++;
                 }
@@ -155,11 +155,14 @@ namespace GoldenBall.Classes
                 var currentDown = sorted[sorted.Count - 1 - i];
 
                 var topTeamPlayer = currentTop.Players.OrderBy(p => p.Mark).ToArray()[i];
-                var downTeamPlayer = currentTop.Players.OrderByDescending(p => p.Mark).ToArray()[i];
+                var downTeamPlayer = currentDown.Players.OrderByDescending(p => p.Mark).ToArray()[i];
 
                 var tempPlayer = topTeamPlayer;
                 topTeamPlayer = downTeamPlayer;
                 downTeamPlayer = tempPlayer;
+
+                currentTop.DetermineMark();
+                currentDown.DetermineMark();
             }
         }
 
