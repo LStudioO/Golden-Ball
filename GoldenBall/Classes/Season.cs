@@ -154,12 +154,14 @@ namespace GoldenBall.Classes
                 var currentTop = sorted[i];
                 var currentDown = sorted[sorted.Count - 1 - i];
 
-                var topTeamPlayer = currentTop.Players.OrderBy(p => p.Mark).ToArray()[i];
-                var downTeamPlayer = currentDown.Players.OrderByDescending(p => p.Mark).ToArray()[i];
+                var topTeamPlayer = currentTop.Players.OrderByDescending(p => p.Mark).ToArray()[i];
+                var downTeamPlayer = currentDown.Players.OrderBy(p => p.Mark).ToArray()[i];
 
-                var tempPlayer = topTeamPlayer;
-                topTeamPlayer = downTeamPlayer;
-                downTeamPlayer = tempPlayer;
+                currentTop.Players.Remove(topTeamPlayer);
+                currentTop.Players.Add(downTeamPlayer);
+
+                currentDown.Players.Remove(downTeamPlayer);
+                currentDown.Players.Add(topTeamPlayer);
 
                 currentTop.DetermineMark();
                 currentDown.DetermineMark();
