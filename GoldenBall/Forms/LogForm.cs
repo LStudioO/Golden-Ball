@@ -77,11 +77,30 @@ namespace GoldenBall.Forms
 
                 });
 
-                var season = new Season(tList);
+                Season season;
 
-                season.Start();
+                double previousTeamsMark = 0D;
+                double previousCaptainsMark = 0D;
+                double previousBestSolution = 0D;
 
-            } catch (Exception ex)
+                while (true)
+                {
+                    season = new Season(tList);
+                    season.Start();
+                    if (previousBestSolution >= season.GetBestSolution() && previousTeamsMark >= season.GetBestSolution() && previousCaptainsMark >= season.GetCaptainsMark())
+                    {
+                        break;
+                    } else
+                    {
+                        previousBestSolution = season.GetBestSolution();
+                        previousTeamsMark = season.GetTeamsMark();
+                        previousCaptainsMark = season.GetCaptainsMark();
+                    }
+                }
+
+                txtLog.Text += "Answer: " + season.GetBestSolution() + Environment.NewLine;
+            }
+            catch (Exception ex)
             {
                 txtLog.Text += ex.ToString();
             }

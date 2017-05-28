@@ -13,11 +13,30 @@ namespace GoldenBall.Classes
 
         Dictionary<Team, int> rating;
 
+        public int GetTeamsMark()
+        {
+            return rating.Select(m => m.Value).Sum();
+        }
+
+        public double GetCaptainsMark()
+        {
+            return tList.Select(p => p.Captain.Mark).Sum();
+        }
+
+        public double GetBestSolution()
+        {
+            double bestMark = 0D;
+            foreach(var itm in tList)
+            {
+                if (itm.Captain.Mark > bestMark)
+                    bestMark = itm.Captain.Mark;
+            }
+            return bestMark;
+        }
+
         public Season(List<Team> teams)
         {
             tList = teams;
-
-            dropRating();
         }
 
         private void dropRating()
@@ -192,7 +211,7 @@ namespace GoldenBall.Classes
 
             for (int j = 0; j < 2; j++)
             {
-
+                dropRating();
                 for (int i = 0; i < tCount; i++)
                 {
                     foreach (var itm in tList)
