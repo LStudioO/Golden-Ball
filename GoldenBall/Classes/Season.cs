@@ -22,9 +22,9 @@ namespace GoldenBall.Classes
             T.Text += text + Environment.NewLine;
         }
 
-        public int GetTeamsMark()
+        public double GetTeamsMark()
         {
-            return rating.Select(m => m.Value).Sum();
+            return tList.Select(m => m.Mark).Sum();
         }
 
         public double GetCaptainsMark()
@@ -185,21 +185,29 @@ namespace GoldenBall.Classes
         private void individualTransfer()
         {
 
-            foreach (var itm in tList)
+            for (int i = 0; i < tList.Count; i++)
             {
-                itm.Players.ForEach(p =>
+                var itm = tList[i];
+
+                for (int j = 0; j < itm.Players.Count; j++)
                 {
-                    if (p.NeedIndividualTransfer)
-                    {
-                        var teams = tList.Where(a => a != itm).ToList();
-                        var rTeamIndex = new Random().Next(0, teams.Count);
-                        var rPlayerIndex = new Random().Next(0, itm.Players.Count);
-                        var tmpPlayer = p;
-                        p.Success();
-                        p = teams[rTeamIndex].Players[rPlayerIndex];
-                        teams[rTeamIndex].Players[rPlayerIndex] = tmpPlayer;
-                    }
-                });
+                    var p = itm.Players[j];
+    
+                        if (p.NeedIndividualTransfer)
+                        {
+                            var teams = tList.Where(a => a != itm).ToList();
+                            var rTeamIndex = new Random().Next(0, teams.Count);
+                            var rPlayerIndex = new Random().Next(0, itm.Players.Count);
+                            var tmpPlayer = p;
+                            p.Success();
+
+                            int index = itm.Players.FindIndex(e => e == p);
+
+                            itm.Players[index] = teams[rTeamIndex].Players[rPlayerIndex];
+                            teams[rTeamIndex].Players[rPlayerIndex] = tmpPlayer;
+                        }
+                    
+                }
             }
         }
 

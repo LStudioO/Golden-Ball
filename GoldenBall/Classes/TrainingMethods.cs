@@ -102,51 +102,64 @@ namespace GoldenBall.Classes
             double mark = player.Mark;
 
             int halfSize = (captain.Route.Count - 1) / 2 + 1;
-
-            var halfRoute = captain.Route.GetRange(1, halfSize);
-
-            for (int i = 1; i < captain.Route.Count - halfSize; i++)
+            
+            for (int m = 0; m < 2; m++)
             {
-                var newRoute = new List<int>();
 
-                newRoute.Add(player.Route[0]);
+                List<int> halfRoute;
 
-                var aPath = Enumerable.Range(1, player.Capacity).Except(newRoute).Except(halfRoute).ToList();
-
-                // pre
-                for (int k = 1; k < i; k++)
+                if (m == 0)
                 {
-                    var itm = aPath.First();
-                    aPath.RemoveAt(0);
-                    newRoute.Add(itm);
+                   halfRoute = captain.Route.GetRange(1, halfSize);
                 }
-
-                newRoute.AddRange(halfRoute);
-
-                // after
-                for (int l = i + halfSize; l < captain.Route.Count; l++)
+                else
                 {
-                    var itm = aPath.First();
-                    aPath.RemoveAt(0);
-                    newRoute.Add(itm);
+                    halfRoute = captain.Route.GetRange(halfSize, halfSize);
                 }
-
-                if (!Manager.Instance.PlayerExists(newRoute))
+                    
+                    
+                for (int i = 1; i < captain.Route.Count - halfSize; i++)
                 {
-                    var oldRoute = player.Route;
-                    player.Route = newRoute;
-                    if (player.Mark <= mark)
+                    var newRoute = new List<int>();
+
+                    newRoute.Add(player.Route[0]);
+
+                    var aPath = Enumerable.Range(1, player.Capacity).Except(newRoute).Except(halfRoute).ToList();
+
+                    // pre
+                    for (int k = 1; k < i; k++)
                     {
-                        player.Success();
-                        return;
+                        var itm = aPath.First();
+                        aPath.RemoveAt(0);
+                        newRoute.Add(itm);
                     }
-                    else
+
+                    newRoute.AddRange(halfRoute);
+
+                    // after
+                    for (int l = i + halfSize; l < captain.Route.Count; l++)
                     {
-                        player.NotSuccess();
-                        player.Route = oldRoute;
+                        var itm = aPath.First();
+                        aPath.RemoveAt(0);
+                        newRoute.Add(itm);
+                    }
+
+                    if (!Manager.Instance.PlayerExists(newRoute))
+                    {
+                        var oldRoute = player.Route;
+                        player.Route = newRoute;
+                        if (player.Mark <= mark)
+                        {
+                            player.Success();
+                            return;
+                        }
+                        else
+                        {
+                            player.NotSuccess();
+                            player.Route = oldRoute;
+                        }
                     }
                 }
-
             }
         }
 

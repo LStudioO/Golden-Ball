@@ -14,9 +14,14 @@ namespace GoldenBall.Forms
             InitializeComponent();
         }
 
+        List<Team> TeamL;
+
         private void btnStart_Click(object sender, EventArgs e)
         {
+           var m = Manager.Instance.AllPlayers.Where(p => p.Mark == Convert.ToInt32(textBox1.Text)).ToList();
+            int j = 5;
 
+            j++;
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -99,6 +104,7 @@ namespace GoldenBall.Forms
                     }
                 }
 
+                TeamL = tList;
                 txtLog.Text += "Answer: " + season.GetBestSolution() + Environment.NewLine;
 
                 txtLog.Text += "Route: ";
