@@ -37,27 +37,27 @@ namespace GoldenBall.Classes
                 while (n2 == n1)
                     n2 = rand.Next(1, p.Capacity);
 
-                var prevMark = p.Mark;
+                var newPlayer = new Player(p.Route);
+                newPlayer.SwapRoute(n1, n2);
 
-                p.SwapRoute(n1, n2);
 
-                if (p.Mark < prevMark)
+                if (newPlayer.Mark <= p.Mark)
                 {
-                    if (!Manager.Instance.PlayerExists(p))
+                    if (!Manager.Instance.PlayerExists(newPlayer))
                     {
+                        p.SwapRoute(n1, n2);
                         p.Success();
                         return;
-                    } else
+                    }
+                    else
                     {
                         p.NotSuccess();
-                        p.SwapRoute(n1, n2);
                         i--;
                     }
                 }
                 else
                 {
                     p.NotSuccess();
-                    p.SwapRoute(n1, n2);
                 }
             }
         }

@@ -34,10 +34,10 @@ namespace GoldenBall.Classes
 
         public double GetBestSolution()
         {
-            double bestMark = 0D;
+            double bestMark = double.MaxValue;
             foreach(var itm in tList)
             {
-                if (itm.Captain.Mark > bestMark)
+                if (itm.Captain.Mark < bestMark)
                     bestMark = itm.Captain.Mark;
             }
             return bestMark;
@@ -253,21 +253,21 @@ namespace GoldenBall.Classes
 
                 transfer();
                 findCoach();
-
-                string result = "";
-
-                tList.ForEach(t => {
-                    result += "Team #" + t.Id.ToString() +  " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
-                    t.Players.ForEach(p => result += p.Mark + " ");
-                    result += Environment.NewLine;
-                });
-
-                log(result);
-
-                new String('c',4);
+            
 
             }
 
+            string result = "======================================" + Environment.NewLine;
+
+            tList.ForEach(t => {
+                result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
+                t.Players.ForEach(p => result += p.Mark + " ");
+                result += Environment.NewLine;
+            });
+
+            log(result);
+
+            result += Environment.NewLine + "======================================" + Environment.NewLine;
         }
     }
 }

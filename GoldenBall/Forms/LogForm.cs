@@ -33,9 +33,9 @@ namespace GoldenBall.Forms
 
                 var capacity = Manager.Instance.CitiesCount;
 
-                var teamCount = 2;
+                var teamCount = 4;
 
-                var playerInTeamCount = 2;
+                var playerInTeamCount = 11;
 
                 for (int i = 0; i < teamCount * playerInTeamCount; i++)
                 {
@@ -44,7 +44,7 @@ namespace GoldenBall.Forms
 
                     do
                     {
-                        p = new Player(capacity, 1);
+                        p = new Player(capacity, 4);
 
                         success = !pList.Any(obj => obj.Route.SequenceEqual(p.Route));
 
@@ -88,7 +88,7 @@ namespace GoldenBall.Forms
                     season = new Season(tList);
                     season.T = txtLog;
                     season.Start();
-                    if (previousBestSolution >= season.GetBestSolution() && previousTeamsMark >= season.GetBestSolution() && previousCaptainsMark >= season.GetCaptainsMark())
+                    if (previousBestSolution == season.GetBestSolution() && previousTeamsMark == season.GetTeamsMark() && previousCaptainsMark == season.GetCaptainsMark())
                     {
                         break;
                     } else
@@ -100,6 +100,10 @@ namespace GoldenBall.Forms
                 }
 
                 txtLog.Text += "Answer: " + season.GetBestSolution() + Environment.NewLine;
+
+                txtLog.Text += "Route: ";
+                var best = Manager.Instance.AllPlayers.FindAll(i => i.Mark == season.GetBestSolution());
+                best.ForEach(b => { b.Route.ForEach(i => { txtLog.Text += i + " "; }); txtLog.Text += Environment.NewLine;    }); 
             }
             catch (Exception ex)
             {
