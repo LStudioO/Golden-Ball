@@ -225,8 +225,8 @@ namespace GoldenBall.Classes
 
                     for (int k = 0; k < tCount + 1; k += 2)
                     {
-                        var teamFirstId = table[i, k];
-                        var teamSecondId = table[i, k + 1];
+                        var teamFirstId = table[i, k] - 1;
+                        var teamSecondId = table[i, k + 1] - 1;
 
                         playMatch(tList[teamFirstId], tList[teamSecondId]);
                     }
