@@ -33,9 +33,9 @@ namespace GoldenBall.Forms
 
                 var capacity = Manager.Instance.CitiesCount;
 
-                var teamCount = 4;
+                var teamCount = 2;
 
-                var playerInTeamCount = 3;
+                var playerInTeamCount = 2;
 
                 for (int i = 0; i < teamCount * playerInTeamCount; i++)
                 {
@@ -86,6 +86,7 @@ namespace GoldenBall.Forms
                 while (true)
                 {
                     season = new Season(tList);
+                    season.T = txtLog;
                     season.Start();
                     if (previousBestSolution >= season.GetBestSolution() && previousTeamsMark >= season.GetBestSolution() && previousCaptainsMark >= season.GetCaptainsMark())
                     {

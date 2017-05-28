@@ -4,14 +4,23 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GoldenBall.Classes
 {
     class Season
     {
+
+        public RichTextBox T { get; set; }
+
         List<Team> tList;
 
         Dictionary<Team, int> rating;
+
+        private void log(string text)
+        {
+            T.Text += text + Environment.NewLine;
+        }
 
         public int GetTeamsMark()
         {
@@ -115,8 +124,8 @@ namespace GoldenBall.Classes
             int firstTeamMark = 0;
             int secondTeamMark = 0;
 
-            var playersTeamOne = t1.Players.OrderByDescending(p => p.Mark).ToList();
-            var playersTeamTwo = t2.Players.OrderByDescending(p => p.Mark).ToList();
+            var playersTeamOne = t1.Players.OrderBy(p => p.Mark).ToList();
+            var playersTeamTwo = t2.Players.OrderBy(p => p.Mark).ToList();
 
             for (int i = 0; i < t1.Players.Count; i++)
             {
@@ -154,17 +163,22 @@ namespace GoldenBall.Classes
                 var currentTop = sorted[i];
                 var currentDown = sorted[sorted.Count - 1 - i];
 
-                var topTeamPlayer = currentTop.Players.OrderByDescending(p => p.Mark).ToArray()[i];
-                var downTeamPlayer = currentDown.Players.OrderBy(p => p.Mark).ToArray()[i];
 
-                currentTop.Players.Remove(topTeamPlayer);
-                currentTop.Players.Add(downTeamPlayer);
+                    var topTeamPlayer = currentTop.Players.OrderByDescending(p => p.Mark).ToArray()[i];
+                    var downTeamPlayer = currentDown.Players.OrderBy(p => p.Mark).ToArray()[i];
 
-                currentDown.Players.Remove(downTeamPlayer);
-                currentDown.Players.Add(topTeamPlayer);
+                if (topTeamPlayer.Mark > downTeamPlayer.Mark)
+                {
+                    currentTop.Players.Remove(topTeamPlayer);
+                    currentTop.Players.Add(downTeamPlayer);
 
-                currentTop.DetermineMark();
-                currentDown.DetermineMark();
+                    currentDown.Players.Remove(downTeamPlayer);
+                    currentDown.Players.Add(topTeamPlayer);
+
+                    currentTop.DetermineMark();
+                    currentDown.DetermineMark();
+                }
+              
             }
         }
 
@@ -203,7 +217,7 @@ namespace GoldenBall.Classes
                     newCoach = TrainingMethods.GetRandomTrainingMethod();
                 } while (Delegate.Equals(oldCoach, newCoach));
 
-                oldCoach = newCoach;
+                sorted[i].TrainingMethod = newCoach;
             }
         }
 
@@ -239,6 +253,19 @@ namespace GoldenBall.Classes
 
                 transfer();
                 findCoach();
+
+                string result = "";
+
+                tList.ForEach(t => {
+                    result += "Team #" + t.Id.ToString() +  " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
+                    t.Players.ForEach(p => result += p.Mark + " ");
+                    result += Environment.NewLine;
+                });
+
+                log(result);
+
+                new String('c',4);
+
             }
 
         }

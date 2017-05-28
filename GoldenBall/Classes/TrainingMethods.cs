@@ -6,6 +6,7 @@ namespace GoldenBall.Classes
 {
     class TrainingMethods
     {
+        private static Random rand = new Random();
 
         public static Train GetRandomTrainingMethod()
         {
@@ -30,7 +31,6 @@ namespace GoldenBall.Classes
         {
             for (int i = 0; i < 4; i++)
             {
-                var rand = new Random();
                 var n1 = rand.Next(1, p.Capacity);
                 var n2 = rand.Next(1, p.Capacity);
 
@@ -40,12 +40,19 @@ namespace GoldenBall.Classes
                 var prevMark = p.Mark;
 
                 p.SwapRoute(n1, n2);
-                p.DetermineMark();
 
-                if (p.Mark < prevMark && !Manager.Instance.PlayerExists(p))
+                if (p.Mark < prevMark)
                 {
-                    p.Success();
-                    return;
+                    if (!Manager.Instance.PlayerExists(p))
+                    {
+                        p.Success();
+                        return;
+                    } else
+                    {
+                        p.NotSuccess();
+                        p.SwapRoute(n1, n2);
+                        i--;
+                    }
                 }
                 else
                 {
@@ -57,7 +64,37 @@ namespace GoldenBall.Classes
 
         public static void Chain(Player p)
         {
+            for (int i = 0; i < 4; i++)
+            {
+                var n1 = rand.Next(1, p.Capacity);
+                var n2 = rand.Next(1, p.Capacity);
 
+                while (n2 == n1)
+                    n2 = rand.Next(1, p.Capacity);
+
+                var newPlayer = new Player(p.Route);
+                newPlayer.SwapRoute(n1, n2);
+                
+
+                if (newPlayer.Mark <= p.Mark)
+                {
+                    if (!Manager.Instance.PlayerExists(newPlayer))
+                    {
+                        p.SwapRoute(n1, n2);
+                        p.Success();
+                        return;
+                    }
+                    else
+                    {
+                        p.NotSuccess();
+                       // i--;
+                    }
+                }
+                else
+                {
+                    p.NotSuccess();
+                }
+            }
         }
 
         public static void Personal(Player captain, Player player)
@@ -98,7 +135,7 @@ namespace GoldenBall.Classes
                 {
                     var oldRoute = player.Route;
                     player.Route = newRoute;
-                    if (player.Mark >= mark)
+                    if (player.Mark <= mark)
                     {
                         player.Success();
                         return;

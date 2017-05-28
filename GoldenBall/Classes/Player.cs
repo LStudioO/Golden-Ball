@@ -40,7 +40,9 @@ namespace GoldenBall.Classes
 
         public Player(List<int> route)
         {
-            Route = route;
+            var list = new List<int>();
+            list.AddRange(route);
+            Route = list;
         }
 
         private double mark;
@@ -131,6 +133,7 @@ namespace GoldenBall.Classes
             var tmp = Route[index1];
             Route[index1] = Route[index2];
             Route[index2] = tmp;
+            DetermineMark();
         }
 
         public void DetermineMark()

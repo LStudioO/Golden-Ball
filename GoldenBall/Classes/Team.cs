@@ -89,13 +89,6 @@ namespace GoldenBall.Classes
             mark = sum / playersList.Count;
         }
 
-        public static void Transfer(Player p1, Player p2)
-        {
-            Player temp = p1;
-            p1 = p2;
-            p2 = temp;
-        }
-
         public void Train()
         {
             playersList.ForEach(p => trainingMethod(p));
@@ -112,16 +105,7 @@ namespace GoldenBall.Classes
             });
         }
 
-        public void IndividualTransfer()
-        {
-            playersList.ForEach(p =>
-            {
-                if (p.NeedIndividualTransfer)
-                {
-                   // TODO
-                }
-            });
-        }
+
 
 
     }
