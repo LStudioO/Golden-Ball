@@ -49,11 +49,13 @@ namespace GoldenBall.Classes
 
         public bool PlayerExists(Player p)
         {
+           return false;
             return allPlayers.Any(obj => obj.Route.SequenceEqual(p.Route));
         }
 
         public bool PlayerExists(List<int> route)
         {
+           return false;
             return allPlayers.Any(obj => obj.Route.SequenceEqual(route));
         }
 

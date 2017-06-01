@@ -52,7 +52,7 @@ namespace GoldenBall.Classes
                     else
                     {
                         p.NotSuccess();
-                        i--;
+                        //i--;
                     }
                 }
                 else

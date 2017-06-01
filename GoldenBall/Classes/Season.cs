@@ -265,17 +265,17 @@ namespace GoldenBall.Classes
 
             }
 
-            string result = "======================================" + Environment.NewLine;
+            //string result = "======================================" + Environment.NewLine;
 
-            tList.ForEach(t => {
-                result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
-                t.Players.ForEach(p => result += p.Mark + " ");
-                result += Environment.NewLine;
-            });
+            //tList.ForEach(t => {
+            //    result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
+            //    t.Players.ForEach(p => result += p.Mark + " ");
+            //    result += Environment.NewLine;
+            //});
 
-            log(result);
+            //log(result);
 
-            result += Environment.NewLine + "======================================" + Environment.NewLine;
+            //result += Environment.NewLine + "======================================" + Environment.NewLine;
         }
     }
 }

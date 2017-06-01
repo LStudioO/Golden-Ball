@@ -38,9 +38,9 @@ namespace GoldenBall.Forms
 
                 var capacity = Manager.Instance.CitiesCount;
 
-                var teamCount = 4;
+                var teamCount = 10;
 
-                var playerInTeamCount = 11;
+                var playerInTeamCount = 5;
 
                 for (int i = 0; i < teamCount * playerInTeamCount; i++)
                 {
