@@ -27,6 +27,7 @@ namespace GoldenBall
         {
             InitializeComponent();
             tabFrame.TabPages[1].Enabled = false;
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void generateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -207,33 +208,12 @@ namespace GoldenBall
 
         private void btnSolve_Click(object sender, EventArgs e)
         {
-            Team.dropCounter();
-
             tabFrame.TabPages[1].Enabled = true;
             tabFrame.SelectedIndex = 1;
 
             txtResult.Clear();
 
-            var tCount = Settings.Instance().TeamsCount;
-            var pCount = Settings.Instance().PlayersCount;
-
-            var distances = new double[cityCount, cityCount];
-
-            for (int i = 0; i < cityCount; i++)
-            {
-                for (int j = 0; j < cityCount; j++)
-                {
-                    if (i != j)
-                        distances[i,j] = Convert.ToDouble(dgvMain[i, j].Value);
-                }
-            }
-
-            tour = new Tournament(tCount, pCount, distances);
-
-            tour.Output += UpdateLog;
-
-            tour.Initialise();
-
+            runner.RunWorkerAsync();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -256,14 +236,81 @@ namespace GoldenBall
             tour.Run(-1);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void runner_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
 
-            var list1 = new List<int> { 1, 8, 3, 2 };
-            var list2 = new List<int> { 1, 8, 3, 2 };
+            Team.dropCounter();
+            Season.dropSeason();
 
-            MessageBox.Show((list1.GetSequenceHashCode() == list2.GetSequenceHashCode()).ToString());
+            var tCount = Settings.Instance().TeamsCount;
+            var pCount = Settings.Instance().PlayersCount;
 
+            var distances = new double[cityCount, cityCount];
+
+            for (int i = 0; i < cityCount; i++)
+            {
+                for (int j = 0; j < cityCount; j++)
+                {
+                    if (i != j)
+                        distances[i, j] = Convert.ToDouble(dgvMain[i, j].Value);
+                }
+            }
+
+            tour = new Tournament(tCount, pCount, distances);
+
+            tour.Output += UpdateLog;
+
+            tour.Initialise();
+
+
+            //try
+            //{
+            //    Team.dropCounter();
+
+            //    var tCount = Settings.Instance().TeamsCount;
+            //    var pCount = Settings.Instance().PlayersCount;
+
+
+            //    for (int l = 5; l < 16; l++)
+            //    {
+            //        cityCount = l;
+            //        for (int k = 0; k < 1; k++)
+            //        {
+            //            var distances = new double[cityCount, cityCount];
+
+            //            for (int i = 0; i < cityCount; i++)
+            //            {
+            //                for (int j = 0; j < cityCount; j++)
+            //                {
+            //                    if (i != j)
+            //                        distances[i, j] = rnd.Next(99);
+            //                }
+            //            }
+
+
+            //            for (int j = 2; j < 5; j += 2)
+            //                for (int i = 1; i < 6; i++)
+            //                {
+            //                    //if (j == 4 && i == 3)
+            //                    //    continue;
+            //                    Team.dropCounter();
+            //                    tour = new Tournament(j, i, distances);
+
+            //                    tour.Output += UpdateLog;
+
+            //                    tour.Initialise();
+
+            //                    File.AppendAllText("test.txt", cityCount.ToString() + " " + j.ToString() + " " + i.ToString() + " ");
+            //                    tour.Run();
+            //                }
+            //            File.AppendAllText("test.txt", Environment.NewLine + Environment.NewLine);
+            //        }
+            //        File.AppendAllText("test.txt", Environment.NewLine + "=============================" + Environment.NewLine);
+            //    }
+            //}
+            //catch (Exception) { 
+
+            //}
         }
     }
 }

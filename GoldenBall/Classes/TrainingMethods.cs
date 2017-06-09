@@ -10,7 +10,7 @@ namespace GoldenBall.Classes
 
         public static Train GetRandomTrainingMethod()
         {
-            var n = new Random().Next(2);
+            var n = new Random().Next(3);
 
             switch (n)
             {
@@ -20,7 +20,11 @@ namespace GoldenBall.Classes
                     }
                 case 1:
                     {
-                        return Chain;
+                        return TwoOpt;
+                    }
+                case 2:
+                    {
+                        return ThreeOpt;
                     }
                 default:
                     return Random;
@@ -31,7 +35,7 @@ namespace GoldenBall.Classes
         {
             try
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     var n1 = rand.Next(1, p.Capacity);
                     var n2 = rand.Next(1, p.Capacity);
@@ -50,56 +54,75 @@ namespace GoldenBall.Classes
                             p.SwapRoute(n1, n2);
                             p.Success();
                             return;
-                        }
-                        else
+                        } else
                         {
-                            p.NotSuccess();
+
                         }
-                    }
-                    else
+                    } else
                     {
-                        p.NotSuccess();
+
                     }
                 }
+                p.NotSuccess();
             } catch (Exception ex)
             {
                 string s = ex.ToString();
             }
         }
 
-        public static void Chain(Player p)
+        public static void TwoOpt(Player p)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i < p.Capacity - 2; i++)
             {
-                var n1 = rand.Next(1, p.Capacity);
-                var n2 = rand.Next(1, p.Capacity);
-
-                while (n2 == n1)
-                    n2 = rand.Next(1, p.Capacity);
-
-                var newPlayer = new Player(p.Route);
-                newPlayer.SwapRoute(n1, n2);
-                
-
-                if (newPlayer.Mark <= p.Mark)
+                for (int j = i + 1; j < p.Capacity - 1; j++)
                 {
-                    if (!Manager.Instance.PlayerExists(newPlayer))
+                    var newPlayer = new Player(p.Route);
+                    newPlayer.SwapRoute(i, j);
+                    if (newPlayer.Mark <= p.Mark)
                     {
-                        p.SwapRoute(n1, n2);
-                        p.Success();
-                        return;
+                        if (!Manager.Instance.PlayerExists(newPlayer))
+                        {
+                            p.SwapRoute(i, j);
+                            p.Success();
+                            return;
+                        }
                     }
-                    else
-                    {
-                        p.NotSuccess();
-                       // i--;
-                    }
-                }
-                else
-                {
-                    p.NotSuccess();
                 }
             }
+            for (int i = 0; i < 5; i++) 
+                p.NotSuccess();
+        }   
+
+
+
+
+
+        public static void ThreeOpt(Player p)
+        {
+            for (int i = 1; i < p.Capacity - 3; i++)
+            {
+                for (int j = i + 1; j < p.Capacity - 2; j++)
+                {
+                    for (int k = j + 1; k < p.Capacity - 1; k++)
+                    {
+                        var newPlayer = new Player(p.Route);
+                        newPlayer.SwapRoute(i, j);
+                        newPlayer.SwapRoute(j, k);
+
+                        if (newPlayer.Mark <= p.Mark)
+                        {
+                            if (!Manager.Instance.PlayerExists(newPlayer))
+                            {
+                                p.SwapRoute(i, j);
+                                p.Success();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < 5; i++)
+                p.NotSuccess();
         }
 
         public static void Personal(Player captain, Player player)

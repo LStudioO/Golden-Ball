@@ -73,7 +73,7 @@ namespace GoldenBall.Classes
         {
             get
             {
-                return (unsuccessfulCount > 10);
+                return (unsuccessfulCount > 6);
             }
         }
 

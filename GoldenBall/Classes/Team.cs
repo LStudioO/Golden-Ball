@@ -82,10 +82,7 @@ namespace GoldenBall.Classes
 
             var n = new Random().Next(2);
 
-            if (n == 0)
-                trainingMethod = TrainingMethods.Random;
-            else
-                trainingMethod = TrainingMethods.Chain;
+            trainingMethod = TrainingMethods.GetRandomTrainingMethod();
         }
 
         public void DetermineMark()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace GoldenBall.Classes
         double previousTeamsMark = 0D;
         double previousCaptainsMark = 0D;
         double previousBestSolution = 0D;
+
+        int final = 100;
 
         public Log Output;
 
@@ -86,7 +89,7 @@ namespace GoldenBall.Classes
 
                 });
 
-                Output(txtLog);
+                //Output(txtLog);
             }
             catch (Exception ex)
             {
@@ -108,10 +111,12 @@ namespace GoldenBall.Classes
                     if (steps == 0)
                         break;
 
+                    final--;
+
                     season = new Season(tList);
                     season.Output = Output;
                     season.Start();
-                    if (previousBestSolution == season.GetBestSolution() && previousTeamsMark == season.GetTeamsMark() && previousCaptainsMark == season.GetCaptainsMark())
+                    if (final <= 0 || previousBestSolution == season.GetBestSolution() && previousTeamsMark == season.GetTeamsMark() && previousCaptainsMark == season.GetCaptainsMark())
                     {
                         watch.Stop();
                         var elapsedMs = watch.ElapsedMilliseconds;
@@ -122,9 +127,12 @@ namespace GoldenBall.Classes
 
                         txtLog += "Route: ";
                         var best = Manager.Instance.AllPlayers.FindAll(i => i.Mark == season.GetBestSolution());
+
                         best.ForEach(b => { b.Route.ForEach(i => { txtLog += i + " "; }); txtLog += Environment.NewLine; });
 
                         txtLog += "Time: " + elapsedMs + " ms" + Environment.NewLine;
+
+                        File.AppendAllText("test.txt", elapsedMs + Environment.NewLine); 
 
                         Output(txtLog);
 

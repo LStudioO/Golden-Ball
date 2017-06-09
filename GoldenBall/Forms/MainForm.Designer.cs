@@ -46,6 +46,7 @@
             this.txtResult = new System.Windows.Forms.RichTextBox();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnAll = new System.Windows.Forms.Button();
+            this.runner = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCities)).BeginInit();
@@ -235,6 +236,10 @@
             this.btnAll.UseVisualStyleBackColor = true;
             this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
             // 
+            // runner
+            // 
+            this.runner.DoWork += new System.ComponentModel.DoWorkEventHandler(this.runner_DoWork);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -279,6 +284,7 @@
         private System.Windows.Forms.RichTextBox txtResult;
         private System.Windows.Forms.Button btnAll;
         private System.Windows.Forms.Button btnNext;
+        private System.ComponentModel.BackgroundWorker runner;
     }
 }
 

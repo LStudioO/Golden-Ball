@@ -61,8 +61,9 @@ namespace GoldenBall.Classes
 
         public bool PlayerExists(List<int> route)
         {
-           //return false;
-            return allPlayers.Any(obj => obj.GetHash() == route.GetSequenceHashCode());
+            if (Settings.Instance().NeedUniquePlayers)
+                return allPlayers.Any(obj => obj.GetHash() == route.GetSequenceHashCode());
+            else return false;
         }
 
         public double GetDistanceBetween(int first, int second)

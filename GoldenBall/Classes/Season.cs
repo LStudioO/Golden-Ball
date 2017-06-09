@@ -23,6 +23,11 @@ namespace GoldenBall.Classes
             return tList.Select(m => m.Mark).Sum();
         }
 
+        public static void dropSeason()
+        {
+            count = 1;
+        }
+
         public double GetCaptainsMark()
         {
             return tList.Select(p => p.Captain.Mark).Sum();
@@ -156,24 +161,27 @@ namespace GoldenBall.Classes
 
             for (int i = 0; i < sorted.Count / 2; i++)
             {
-                var currentTop = sorted[i];
-                var currentDown = sorted[sorted.Count - 1 - i];
+                try
+                {
+                    var currentTop = sorted[i];
+                    var currentDown = sorted[sorted.Count - 1 - i];
 
 
                     var topTeamPlayer = currentTop.Players.OrderByDescending(p => p.Mark).ToArray()[i];
                     var downTeamPlayer = currentDown.Players.OrderBy(p => p.Mark).ToArray()[i];
 
-                if (topTeamPlayer.Mark > downTeamPlayer.Mark)
-                {
-                    currentTop.Players.Remove(topTeamPlayer);
-                    currentTop.Players.Add(downTeamPlayer);
+                    if (topTeamPlayer.Mark > downTeamPlayer.Mark)
+                    {
+                        currentTop.Players.Remove(topTeamPlayer);
+                        currentTop.Players.Add(downTeamPlayer);
 
-                    currentDown.Players.Remove(downTeamPlayer);
-                    currentDown.Players.Add(topTeamPlayer);
+                        currentDown.Players.Remove(downTeamPlayer);
+                        currentDown.Players.Add(topTeamPlayer);
 
-                    currentTop.DetermineMark();
-                    currentDown.DetermineMark();
-                }
+                        currentTop.DetermineMark();
+                        currentDown.DetermineMark();
+                    }
+                } catch { }
               
             }
         }
@@ -247,14 +255,14 @@ namespace GoldenBall.Classes
 
                     individualTransfer();
 
-                    Parallel.For(0, (tCount + 1)/2, l =>
-                    {
-                        int k = l * 2;
-                        var teamFirstId = table[i, k] - 1;
-                        var teamSecondId = table[i, k + 1] - 1;
+                    Parallel.For(0, (tCount + 1) / 2, l =>
+                      {
+                          int k = l * 2;
+                          var teamFirstId = table[i, k] - 1;
+                          var teamSecondId = table[i, k + 1] - 1;
 
-                        playMatch(tList[teamFirstId], tList[teamSecondId]);
-                    });
+                          playMatch(tList[teamFirstId], tList[teamSecondId]);
+                      });
 
                     //for (int k = 0; k < tCount + 1; k += 2)
                     //{
@@ -269,32 +277,35 @@ namespace GoldenBall.Classes
                 findCoach();
             }
 
-            //string result = "================ Season #" + count++.ToString() + " ======================" + Environment.NewLine;
+            if (Settings.Instance().NeedIntermResult)
+                {
+                string result = "================ Season #" + count++.ToString() + " ======================" + Environment.NewLine;
 
-            //result += "Rating table:" + Environment.NewLine;
+                result += "Rating table:" + Environment.NewLine;
 
-            //int counter = 1;
+                int counter = 1;
 
-            //foreach (var itm in rating)
-            //{
-            //    result += counter++.ToString() + ". Team #" + itm.Key.Id.ToString() + " ----------> " + itm.Value.ToString() + Environment.NewLine;
-            //}
+                foreach (var itm in rating.OrderByDescending(a => a.Value))
+                {
+                    result += counter++.ToString() + ". Team #" + itm.Key.Id.ToString() + " ----------> " + itm.Value.ToString() + Environment.NewLine;
+                }
 
 
-            //result += Environment.NewLine;
+                result += Environment.NewLine;
 
-            //tList.ForEach(t =>
-            //{
-            //    result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
-            //    t.Players.ForEach(p => result += p.Mark + " ");
-            //    result += Environment.NewLine;
-            //});
+                tList.ForEach(t =>
+                {
+                    result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
+                    t.Players.ForEach(p => result += p.Mark + " ");
+                    result += Environment.NewLine;
+                });
 
-            //result += Environment.NewLine + "Best solution: " + GetBestSolution().ToString() + Environment.NewLine;
+                result += Environment.NewLine + "Best solution: " + GetBestSolution().ToString() + Environment.NewLine;
 
-            //result += "======================================" + Environment.NewLine;
+                result += "======================================" + Environment.NewLine;
 
-            //Output(result);
+                Output(result);
+            }
         }
     }
 }
