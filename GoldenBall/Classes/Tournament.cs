@@ -99,6 +99,8 @@ namespace GoldenBall.Classes
         {
             try
             {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                
                 Season season;
 
                 while (true && !isFinished)
@@ -111,6 +113,9 @@ namespace GoldenBall.Classes
                     season.Start();
                     if (previousBestSolution == season.GetBestSolution() && previousTeamsMark == season.GetTeamsMark() && previousCaptainsMark == season.GetCaptainsMark())
                     {
+                        watch.Stop();
+                        var elapsedMs = watch.ElapsedMilliseconds;
+
                         string txtLog = string.Empty;
 
                         txtLog = "Answer: " + season.GetBestSolution() + Environment.NewLine;
@@ -118,6 +123,8 @@ namespace GoldenBall.Classes
                         txtLog += "Route: ";
                         var best = Manager.Instance.AllPlayers.FindAll(i => i.Mark == season.GetBestSolution());
                         best.ForEach(b => { b.Route.ForEach(i => { txtLog += i + " "; }); txtLog += Environment.NewLine; });
+
+                        txtLog += "Time: " + elapsedMs + " ms" + Environment.NewLine;
 
                         Output(txtLog);
 

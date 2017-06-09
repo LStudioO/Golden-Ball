@@ -269,32 +269,32 @@ namespace GoldenBall.Classes
                 findCoach();
             }
 
-            string result = "================ Season #" + count++.ToString() + " ======================" + Environment.NewLine;
+            //string result = "================ Season #" + count++.ToString() + " ======================" + Environment.NewLine;
 
-            result += "Rating table:" + Environment.NewLine;
+            //result += "Rating table:" + Environment.NewLine;
 
-            int counter = 1;
+            //int counter = 1;
 
-            foreach (var itm in rating)
-            {
-                result += counter++.ToString() + ". Team #" + itm.Key.Id.ToString() + " ----------> " + itm.Value.ToString() + Environment.NewLine;
-            }
+            //foreach (var itm in rating)
+            //{
+            //    result += counter++.ToString() + ". Team #" + itm.Key.Id.ToString() + " ----------> " + itm.Value.ToString() + Environment.NewLine;
+            //}
 
 
-            result += Environment.NewLine;
+            //result += Environment.NewLine;
 
-            tList.ForEach(t =>
-            {
-                result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
-                t.Players.ForEach(p => result += p.Mark + " ");
-                result += Environment.NewLine;
-            });
+            //tList.ForEach(t =>
+            //{
+            //    result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
+            //    t.Players.ForEach(p => result += p.Mark + " ");
+            //    result += Environment.NewLine;
+            //});
 
-            result += Environment.NewLine + "Best solution: " + GetBestSolution().ToString() + Environment.NewLine;
+            //result += Environment.NewLine + "Best solution: " + GetBestSolution().ToString() + Environment.NewLine;
 
-            result += "======================================" + Environment.NewLine;
+            //result += "======================================" + Environment.NewLine;
 
-            Output(result);
+            //Output(result);
         }
     }
 }
