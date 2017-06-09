@@ -10,17 +10,13 @@ namespace GoldenBall.Classes
 {
     class Season
     {
+        private static int count = 1;
 
-        public RichTextBox T { get; set; }
+        public Log Output;
 
         List<Team> tList;
 
         Dictionary<Team, int> rating;
-
-        private void log(string text)
-        {
-            T.Text += text + Environment.NewLine;
-        }
 
         public double GetTeamsMark()
         {
@@ -241,41 +237,64 @@ namespace GoldenBall.Classes
                 dropRating();
                 for (int i = 0; i < tCount; i++)
                 {
-                    foreach (var itm in tList)
+
+                    Parallel.ForEach(tList, itm =>
                     {
                         itm.Train();
                         itm.PersonalTrain();
                         itm.DetermineMark();
-                    }
+                    });
 
                     individualTransfer();
 
-                    for (int k = 0; k < tCount + 1; k += 2)
+                    Parallel.For(0, (tCount + 1)/2, l =>
                     {
+                        int k = l * 2;
                         var teamFirstId = table[i, k] - 1;
                         var teamSecondId = table[i, k + 1] - 1;
 
                         playMatch(tList[teamFirstId], tList[teamSecondId]);
-                    }
+                    });
+
+                    //for (int k = 0; k < tCount + 1; k += 2)
+                    //{
+                    //    var teamFirstId = table[i, k] - 1;
+                    //    var teamSecondId = table[i, k + 1] - 1;
+
+                    //    playMatch(tList[teamFirstId], tList[teamSecondId]);
+                    //}
                 }
 
                 transfer();
                 findCoach();
-            
-
             }
 
-            //string result = "======================================" + Environment.NewLine;
+            string result = "================ Season #" + count++.ToString() + " ======================" + Environment.NewLine;
 
-            //tList.ForEach(t => {
-            //    result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
-            //    t.Players.ForEach(p => result += p.Mark + " ");
-            //    result += Environment.NewLine;
-            //});
+            result += "Rating table:" + Environment.NewLine;
 
-            //log(result);
+            int counter = 1;
 
-            //result += Environment.NewLine + "======================================" + Environment.NewLine;
+            foreach (var itm in rating)
+            {
+                result += counter++.ToString() + ". Team #" + itm.Key.Id.ToString() + " ----------> " + itm.Value.ToString() + Environment.NewLine;
+            }
+
+
+            result += Environment.NewLine;
+
+            tList.ForEach(t =>
+            {
+                result += "Team #" + t.Id.ToString() + " mark: " + t.Mark + Environment.NewLine + "Player marks: ";
+                t.Players.ForEach(p => result += p.Mark + " ");
+                result += Environment.NewLine;
+            });
+
+            result += Environment.NewLine + "Best solution: " + GetBestSolution().ToString() + Environment.NewLine;
+
+            result += "======================================" + Environment.NewLine;
+
+            Output(result);
         }
     }
 }

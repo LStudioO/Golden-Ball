@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,5 +21,19 @@ namespace GoldenBall.Classes
 
             return shuffledList.ToList();
         }
+
+
+        public static int GetSequenceHashCode<T>(this List<T> sequence)
+        {
+            string sb = "";
+            for (int i = 0; i < sequence.Count; ++i)
+            {
+                sb += sequence[i].ToString() + " ";
+            }
+            return sb.GetHashCode();
+        }
+
+
+
     }
 }

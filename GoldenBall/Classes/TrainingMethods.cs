@@ -29,36 +29,42 @@ namespace GoldenBall.Classes
 
         public static void Random(Player p)
         {
-            for (int i = 0; i < 4; i++)
+            try
             {
-                var n1 = rand.Next(1, p.Capacity);
-                var n2 = rand.Next(1, p.Capacity);
-
-                while (n2 == n1)
-                    n2 = rand.Next(1, p.Capacity);
-
-                var newPlayer = new Player(p.Route);
-                newPlayer.SwapRoute(n1, n2);
-
-
-                if (newPlayer.Mark <= p.Mark)
+                for (int i = 0; i < 4; i++)
                 {
-                    if (!Manager.Instance.PlayerExists(newPlayer))
+                    var n1 = rand.Next(1, p.Capacity);
+                    var n2 = rand.Next(1, p.Capacity);
+
+                    while (n2 == n1)
+                        n2 = rand.Next(1, p.Capacity);
+
+                    var newPlayer = new Player(p.Route);
+                    newPlayer.SwapRoute(n1, n2);
+
+
+                    if (newPlayer.Mark <= p.Mark)
                     {
-                        p.SwapRoute(n1, n2);
-                        p.Success();
-                        return;
+                        if (!Manager.Instance.PlayerExists(newPlayer))
+                        {
+                            p.SwapRoute(n1, n2);
+                            p.Success();
+                            return;
+                        }
+                        else
+                        {
+                            p.NotSuccess();
+                            //i--;
+                        }
                     }
                     else
                     {
                         p.NotSuccess();
-                        //i--;
                     }
                 }
-                else
-                {
-                    p.NotSuccess();
-                }
+            } catch (Exception ex)
+            {
+                string s = ex.ToString();
             }
         }
 
@@ -114,7 +120,7 @@ namespace GoldenBall.Classes
                 }
                 else
                 {
-                    halfRoute = captain.Route.GetRange(halfSize, halfSize);
+                    halfRoute = captain.Route.GetRange(halfSize - 1, halfSize);
                 }
                     
                     

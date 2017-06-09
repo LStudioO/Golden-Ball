@@ -50,20 +50,15 @@
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Season.cs" />
+    <Compile Include="Classes\Settings.cs" />
     <Compile Include="Classes\Team.cs" />
     <Compile Include="Classes\Tournament.cs" />
     <Compile Include="Classes\TrainingMethods.cs" />
-    <Compile Include="Forms\GenerationParams.cs">
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\GenerationParams.Designer.cs">
-      <DependentUpon>GenerationParams.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\LogForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\LogForm.Designer.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
+    <Compile Include="Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -73,11 +68,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\GenerationParams.resx">
-      <DependentUpon>GenerationParams.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LogForm.resx">
-      <DependentUpon>LogForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\mainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

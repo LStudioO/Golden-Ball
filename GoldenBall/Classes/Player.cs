@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace GoldenBall.Classes
 {
@@ -16,6 +17,16 @@ namespace GoldenBall.Classes
         private int prevFirst;
 
         private int prevSecond;
+
+        private int hash = -1;
+
+        public int GetHash()
+        {
+            if (hash == -1)
+                hash = route.GetSequenceHashCode();
+
+            return hash;
+        }
 
         public Player(int capacity, int first)
         {
@@ -36,6 +47,8 @@ namespace GoldenBall.Classes
             }
 
             DetermineMark();
+
+            hash = route.GetSequenceHashCode();
         }
 
         public Player(List<int> route)
@@ -43,6 +56,7 @@ namespace GoldenBall.Classes
             var list = new List<int>();
             list.AddRange(route);
             Route = list;
+            hash = route.GetSequenceHashCode();
         }
 
         private double mark;
@@ -112,6 +126,7 @@ namespace GoldenBall.Classes
             {
                 route = value;
                 DetermineMark();
+                hash = route.GetSequenceHashCode();
             }
         }
 
@@ -134,6 +149,7 @@ namespace GoldenBall.Classes
             Route[index1] = Route[index2];
             Route[index2] = tmp;
             DetermineMark();
+            hash = route.GetSequenceHashCode();
         }
 
         public void DetermineMark()

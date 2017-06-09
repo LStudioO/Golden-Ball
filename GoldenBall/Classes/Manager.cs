@@ -17,6 +17,13 @@ namespace GoldenBall.Classes
 
         private int citiesCount;
 
+        public void SetDistance(double[,] d)
+        {
+            dist = d;
+            if (allPlayers != null)
+                allPlayers.Clear();
+        }
+       
         public void Load(string path = "test_example.txt")
         {
             if (!File.Exists(path))
@@ -49,14 +56,13 @@ namespace GoldenBall.Classes
 
         public bool PlayerExists(Player p)
         {
-           return false;
-            return allPlayers.Any(obj => obj.Route.SequenceEqual(p.Route));
+            return PlayerExists(p.Route);
         }
 
         public bool PlayerExists(List<int> route)
         {
-           return false;
-            return allPlayers.Any(obj => obj.Route.SequenceEqual(route));
+           //return false;
+            return allPlayers.Any(obj => obj.GetHash() == route.GetSequenceHashCode());
         }
 
         public double GetDistanceBetween(int first, int second)

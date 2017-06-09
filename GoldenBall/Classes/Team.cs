@@ -69,6 +69,11 @@ namespace GoldenBall.Classes
             }
         }
 
+        public static void dropCounter()
+        {
+            counter = 1;
+        }
+
         public Team(List<Player> p)
         {
             id = counter++;
